@@ -5,13 +5,13 @@ SDIR=./src
 CC= g++ -std=c++11
 CCFLAGS= -Wall -Werror -pedantic -I$(IDIR)
 
-_DEPS= Book.hh Document.hh Library.hh Magazine.hh \
-Person.hh Professor.hh Reference.hh Student.hh
+_DEPS= Buyer.hpp CommandHandler.hpp define.hpp UTKala.hpp \
+Seller.hpp User.hpp
 
 DEPS=$(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ= main.o Book.o Document.o Library.o Magazine.o Person.o \
-Professor.o Reference.o Student.o
+_OBJ= main.o Buyer.o CommandHandler.o define.o UTKala.o \
+Seller.o User.o
 
 OBJ=$(patsubst %,$(ODIR)/%,$(_OBJ))
 
@@ -26,10 +26,10 @@ dir:
 main: $(OBJ)
 	$(CC) $(CCFLAGS) $^ -o $@
 
-$(ODIR)/%.o: $(SDIR)/%.cc $(DEPS)
+$(ODIR)/%.o: $(SDIR)/%.cpp $(DEPS)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
-$(ODIR)/main.o: main.cc $(DEPS)
+$(ODIR)/main.o: main.cpp $(DEPS)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
