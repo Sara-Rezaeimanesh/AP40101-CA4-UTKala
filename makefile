@@ -5,13 +5,13 @@ SDIR=./src
 CC= g++ -std=c++11
 CCFLAGS= -Wall -Werror -pedantic -I$(IDIR)
 
-_DEPS= Buyer.hpp CommandHandler.hpp define.hpp UTKala.hpp \
-Seller.hpp User.hpp
+_DEPS= Buyer.hpp User.hpp CommandHandler.hpp define.hpp \
+Seller.hpp UTKala.hpp
 
 DEPS=$(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ= main.o Buyer.o CommandHandler.o define.o UTKala.o \
-Seller.o User.o
+_OBJ= main.o User.o Buyer.o CommandHandler.o \
+Seller.o UTKala.o 
 
 OBJ=$(patsubst %,$(ODIR)/%,$(_OBJ))
 

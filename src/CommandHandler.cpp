@@ -1,4 +1,4 @@
-#include <./include/CommandHandler.hpp>
+#include <CommandHandler.hpp>
 #include <iostream>
 #include <sstream>
 #include <exception>
@@ -9,10 +9,10 @@ CommandHandler::~CommandHandler() {}
 void CommandHandler::runInputs() {
     ss command;
     while(cin >> command)
-        processInput(command);
+        executeCommand(command);
 }
 
-vector<ss> CommandHandler::processInput(ss command) {
+int CommandHandler::executeCommand(ss command) {
     stringstream commandStream(command);
     bool stat = false;
 
@@ -23,18 +23,22 @@ vector<ss> CommandHandler::processInput(ss command) {
 
     if(name == "signup")
         stat = handleSignUp();
+
+    return stat;
 }
 
 vector<int> CommandHandler::findPos(vector<ss> argNames) {
     vector<int> pos;
     for(string argName : argNames) 
-        for(int i = 0; i < args.size(); i++) {
+        for(size_t i = 0; i < args.size(); i++) {
             if(args[i] == argName) {
                 pos.push_back(i+1);
                 continue;
             }
             throw exception();
         }
+
+    return pos;
 }
 
 bool CommandHandler::handleSignUp() {

@@ -14,7 +14,7 @@ public:
 private:
     UTKala* utk;
     std::vector<ss> args;
-    std::vector<ss> processInput(ss command);
+    int executeCommand(ss command);
     bool handleSignUp();
     std::vector<int> findPos(std::vector<ss> argNames);
 };
