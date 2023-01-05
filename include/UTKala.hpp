@@ -5,14 +5,20 @@
 #include <vector>
 #include <define.hpp>
 
+enum signupArgs {
+    user, pass, role, city
+};
+
 class User;
 
 class UTKala {
 public:
-    void signup(ss user, ss pass, ss role, ss city);
+    int signup(std::vector<ss> args);
+    int login(std::vector<ss> args);
 private:
     User* currUser;
     std::vector<User*> users;
+    User* findUser(ss user, ss pass);
 };
 
 #endif

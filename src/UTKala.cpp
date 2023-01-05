@@ -5,9 +5,26 @@
 
 using namespace std;
 
-void UTKala::signup(ss user, ss pass, ss role, ss city) {
-    if(role == "buyer")
-        users.push_back(new Buyer(user, pass, city));
+int UTKala::signup(vector<ss> args) {
+    if(args[role] == "buyer")
+        users.push_back(new Buyer(args[user], args[pass], args[city]));
     else
-        users.push_back(new Seller(user, pass, city));
+        users.push_back(new Seller(args[user], args[pass], args[city]));
+
+    return 1;
+}
+
+int UTKala::login(vector<ss> args) {
+    try {
+        currUser = findUser(args[user], args[pass]);
+        return 1;
+    } catch(std::exception& ex) { return 2; }
+}
+
+User* UTKala::findUser(ss user, ss pass) {
+    for(User* u : users)
+        if(u->userEquals(user, pass))
+            return u;
+    
+    throw exception();
 }
