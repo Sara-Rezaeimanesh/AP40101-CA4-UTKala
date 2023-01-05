@@ -18,13 +18,20 @@ int UTKala::login(vector<ss> args) {
     try {
         currUser = findUser(args[user], args[pass]);
         return 1;
-    } catch(std::exception& ex) { return 2; }
+    } catch(std::exception& ex) { return stoi(ex.what()); }
 }
 
 User* UTKala::findUser(ss user, ss pass) {
-    for(User* u : users)
-        if(u->userEquals(user, pass))
+    for(User* u : users) {
+        int equals = u->userEquals(user, pass);
+        if(equals == 1)
             return u;
-    
-    throw exception();
+        throw runtime_error(to_string(equals));
+    }
+    return NULL;
+}
+
+int UTKala::logout() {
+    currUser = NULL;
+    return 1;
 }

@@ -15,6 +15,7 @@ class UTKala {
 public:
     int signup(std::vector<ss> args);
     int login(std::vector<ss> args);
+    int logout();
 private:
     User* currUser;
     std::vector<User*> users;

@@ -7,7 +7,7 @@
 class User {
 public:
     User(ss user, ss pass, ss city) : user(user), pass(pass), city(city) {};
-    bool userEquals(ss user_, ss pass_);
+    int userEquals(ss user_, ss pass_);
     ss toString() {return user+" "+pass+" "+city;}
 protected:
     ss user;

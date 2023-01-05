@@ -26,6 +26,7 @@ private:
     std::map<ss, std::vector<ss>> commandArgs;
 
     int executeCommand(ss command);
+    ss splitArgs(ss command);
     std::vector<ss> findArgs(std::vector<ss> argNames);
 };
 

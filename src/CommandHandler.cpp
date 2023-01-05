@@ -15,22 +15,31 @@ void CommandHandler::runInputs() {
         
 }
 
-int CommandHandler::executeCommand(ss command) {
+ss CommandHandler::splitArgs(ss command) {
     stringstream commandStream(command);
-    bool stat = false;
 
     string type, name, qm, cpart;
     commandStream >> type >> name >> qm;
+
     while(commandStream >> cpart) 
         args.push_back(cpart);
+
+    return name;
+}
+
+int CommandHandler::executeCommand(ss command) {
+    int stat = 0;
+    ss name = splitArgs(command);
 
     try {
         if(name == "signup")
             stat = utk->signup(findArgs(commandArgs[name]));
-        if(name == "login")
+        if(name == "login") 
             stat = utk->login(findArgs(commandArgs[name]));
+        if(name == "logout")
+            stat = utk->logout();
+
     } catch(std::exception& ex) { return 0; }
-    
 
     return stat;
 }
