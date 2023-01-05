@@ -12,15 +12,13 @@ void CommandHandler::runInputs() {
         int stat = executeCommand(command);
         oph->showStat(stat);
     }
-        
 }
 
 ss CommandHandler::splitArgs(ss command) {
     stringstream commandStream(command);
-
     string type, name, qm, cpart;
-    commandStream >> type >> name >> qm;
 
+    commandStream >> type >> name >> qm;
     while(commandStream >> cpart) 
         args.push_back(cpart);
 
