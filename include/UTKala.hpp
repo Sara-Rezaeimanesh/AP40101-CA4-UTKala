@@ -9,8 +9,9 @@ class User;
 
 class UTKala {
 public:
-    void signup(ss user, ss pass, ss city, ss role);
+    void signup(ss user, ss pass, ss role, ss city);
 private:
+    User* currUser;
     std::vector<User*> users;
 };
 

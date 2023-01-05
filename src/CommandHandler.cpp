@@ -8,8 +8,11 @@ CommandHandler::~CommandHandler() {}
 
 void CommandHandler::runInputs() {
     ss command;
-    while(cin >> command)
-        executeCommand(command);
+    while(getline(cin, command)) {
+        int stat = executeCommand(command);
+        oph->showStat(stat);
+    }
+        
 }
 
 int CommandHandler::executeCommand(ss command) {
@@ -30,22 +33,21 @@ int CommandHandler::executeCommand(ss command) {
 vector<int> CommandHandler::findPos(vector<ss> argNames) {
     vector<int> pos;
     for(string argName : argNames) 
-        for(size_t i = 0; i < args.size(); i++) {
+        for(size_t i = 0; i < args.size(); i+=2) 
             if(args[i] == argName) {
                 pos.push_back(i+1);
-                continue;
+                break;
             }
-            throw exception();
-        }
-
+    
+    if(argNames.size() != pos.size()) throw exception();
     return pos;
 }
 
-bool CommandHandler::handleSignUp() {
+int CommandHandler::handleSignUp() {
     try {
-        vector<int> argsPos = findPos(vector<ss>{"username", "password", "role", "city"});
+        vector<int> argsPos = findPos(vector<ss>{"username", "password", "role", "address"});
         utk->signup(args[argsPos[0]], args[argsPos[1]], args[argsPos[2]], args[argsPos[3]]);
 
         return 1;
-    } catch(std::exception& ex) { cout << "hello"; return 0; }
+    } catch(std::exception& ex) { return 0; }
 }

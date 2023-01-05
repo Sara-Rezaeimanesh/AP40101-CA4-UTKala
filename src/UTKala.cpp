@@ -1,8 +1,11 @@
 #include <UTKala.hpp>
 #include <Buyer.hpp>
 #include <Seller.hpp>
+#include <iostream>
 
-void UTKala::signup(ss user, ss pass, ss city, ss role) {
+using namespace std;
+
+void UTKala::signup(ss user, ss pass, ss role, ss city) {
     if(role == "buyer")
         users.push_back(new Buyer(user, pass, city));
     else
