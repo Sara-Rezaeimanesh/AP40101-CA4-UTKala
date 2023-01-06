@@ -1,17 +1,18 @@
 #include <CommandHandler.hpp>
 #include <iostream>
 #include <sstream>
-#include <exception>
+#include <Exceptions.hpp>
 using namespace std;
 
 CommandHandler::~CommandHandler() {}
 
 void CommandHandler::runInputs() {
     ss command;
-    while(getline(cin, command)) {
-        int stat = executeCommand(command);
-        oph->showStat(stat);
-    }
+    while(getline(cin, command)) 
+        try {
+            executeCommand(command);
+            if(isPOST) oph->showStat("OK\n");
+        } catch(std::exception& ex) { oph->showStat(ex.what()); }
 }
 
 ss CommandHandler::splitArgs(ss command) {
@@ -22,24 +23,25 @@ ss CommandHandler::splitArgs(ss command) {
     while(commandStream >> cpart) 
         args.push_back(cpart);
 
+    type == "POST" ? isPOST = 1 : isPOST = 0; 
     return name;
 }
 
-int CommandHandler::executeCommand(ss command) {
-    int stat = 0;
+void CommandHandler::executeCommand(ss command) {
     ss name = splitArgs(command);
 
-    try {
-        if(name == "signup")
-            stat = utk->signup(findArgs(commandArgs[name]));
-        if(name == "login") 
-            stat = utk->login(findArgs(commandArgs[name]));
-        if(name == "logout")
-            stat = utk->logout();
+    if(name == "signup") 
+        utk->signup(findArgs(commandArgs[name]));
+    if(name == "login") 
+        utk->login(findArgs(commandArgs[name]));
+    if(name == "logout")
+        utk->logout();
+    if(name == "increase_credit")
+        utk->inreseCredit(findArgs(commandArgs[name]));
+    if(name == "wallet_balance")
+        utk->showWalletBallance();
 
-    } catch(std::exception& ex) { return 0; }
-
-    return stat;
+    args.clear();
 }
 
 vector<ss> CommandHandler::findArgs(vector<ss> argNames) {
@@ -51,6 +53,6 @@ vector<ss> CommandHandler::findArgs(vector<ss> argNames) {
                 break;
             }
     
-    if(argNames.size() != pos.size()) throw exception();
+    if(argNames.size() != pos.size()) throw NotFoundEx();
     return pos;
 }

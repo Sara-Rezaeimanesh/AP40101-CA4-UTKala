@@ -7,8 +7,11 @@
 
 class Buyer : public User {
 public:
-    Buyer(ss user, ss pass, ss city) : User(user, pass, city) {};
+    Buyer(ss user, ss pass, ss city) : User(user, pass, city), credit(0) {};
+    void increaseCredit(int amount);
+    void showCredit();
 private:
+    int credit;
 
 };
 

@@ -13,13 +13,17 @@ class User;
 
 class UTKala {
 public:
-    int signup(std::vector<ss> args);
-    int login(std::vector<ss> args);
-    int logout();
+    void signup(std::vector<ss> args);
+    void login(std::vector<ss> args);
+    void logout();
+    void inreseCredit(std::vector<ss> args);
+    void showWalletBallance();
 private:
     User* currUser;
     std::vector<User*> users;
     User* findUser(ss user, ss pass);
+    void checkUserExistsViolation(ss user_, ss pass_);
+    void ckeckUserRoleIsValid(ss role);
 };
 
 #endif

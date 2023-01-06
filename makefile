@@ -6,7 +6,7 @@ CC= g++ -std=c++11
 CCFLAGS= -Wall -Werror -pedantic -I$(IDIR)
 
 _DEPS= Buyer.hpp User.hpp CommandHandler.hpp define.hpp \
-Seller.hpp UTKala.hpp OutputHandler.hpp
+Seller.hpp UTKala.hpp OutputHandler.hpp Exceptions.hpp
 
 DEPS=$(patsubst %,$(IDIR)/%,$(_DEPS))
 
