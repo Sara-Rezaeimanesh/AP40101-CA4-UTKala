@@ -1,9 +1,9 @@
-#include "../include/Product.hpp"
+#include "Product.hpp"
 
 #include <sstream>
 #include <string>
 
-#include "../include/Exceptions.hpp"
+#include "Exceptions.hpp"
 
 Product::Product(
     int id,
@@ -24,12 +24,10 @@ Product::Product(
 
 int Product::getId() const { return id_; }
 
+long long int Product::getPrice() const { return price_; }
+
 bool Product::matchUsername(const std::string& username) const {
     return seller_username_ == username;
-}
-
-bool Product::matchPrice(int min, int max) const {
-    return price_ <= max && price_ >= min;
 }
 
 long long int Product::try_buy(int amount) {

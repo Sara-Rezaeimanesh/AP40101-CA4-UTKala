@@ -1,7 +1,7 @@
 #ifndef _OUTPUTHANDLER_HPP_
 #define _OUTPUTHANDLER_HPP_
 
-#include <define.hpp>
+#include "define.hpp"
 
 class OutputHandler {
 public:

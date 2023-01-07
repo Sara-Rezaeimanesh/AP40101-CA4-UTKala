@@ -1,31 +1,26 @@
 #ifndef __UTKALA_HPP__
 #define __UTKALA_HPP__
 
-#include <define.hpp>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
-enum signupArgs {
-    user,
-    pass,
-    role,
-    city
-};
+#include "define.hpp"
+
+using ArgsMap = std::unordered_map<std::string, std::string>;
 
 class User;
 class Product;
 
 class UTKala {
 public:
-    void signup(std::vector<ss> args);
-    void login(std::vector<ss> args);
+    void signup(ArgsMap args);
+    void login(ArgsMap args);
     void logout();
-    void increaseCredit(std::vector<ss> args);
+    void increaseCredit(ArgsMap args);
     void showWalletBallance();
-    void showProducts(
-        bool filter_username, const ss& username, bool filter_price, int min, int max
-    );
-    void buyItem(int item_id, int count, bool diff_city);
+    void showProducts(ArgsMap args);
+    void buyItem(ArgsMap args);
 
 private:
     User* currUser;

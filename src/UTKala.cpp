@@ -1,10 +1,13 @@
-#include <Buyer.hpp>
-#include <Exceptions.hpp>
-#include <Seller.hpp>
-#include <UTKala.hpp>
-#include <iostream>
+#include "UTKala.hpp"
 
-#include "../include/Product.hpp"
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+
+#include "Buyer.hpp"
+#include "Exceptions.hpp"
+#include "Product.hpp"
+#include "Seller.hpp"
 
 using namespace std;
 
@@ -25,22 +28,30 @@ Product* UTKala::findProduct(int item_id) {
     throw NotFoundEx();
 }
 
-void UTKala::signup(vector<ss> args) {
-    checkUserExistsViolation(args[user], args[pass]);
-    checkUserRoleIsValid(args[role]);
+void UTKala::signup(ArgsMap args) {
+    const std::string USER_ARG = "username";
+    const std::string PASS_ARG = "password";
+    const std::string ROLE_ARG = "role";
+    const std::string ADDR_ARG = "address";
 
-    if (args[role] == "buyer")
-        users.push_back(new Buyer(args[user], args[pass], args[city]));
+    checkUserExistsViolation(args[USER_ARG], args[PASS_ARG]);
+    checkUserRoleIsValid(args[ROLE_ARG]);
+
+    if (args[ROLE_ARG] == "buyer")
+        users.push_back(new Buyer(args[USER_ARG], args[PASS_ARG], args[ADDR_ARG]));
     else
-        users.push_back(new Seller(args[user], args[pass], args[city]));
+        users.push_back(new Seller(args[USER_ARG], args[PASS_ARG], args[ADDR_ARG]));
 
-    currUser = users[users.size() - 1];
+    currUser = users.back();
 }
 
-void UTKala::login(vector<ss> args) {
-    currUser = findUser(args[user]);
+void UTKala::login(ArgsMap args) {
+    const std::string USER_ARG = "username";
+    const std::string PASS_ARG = "password";
+
+    currUser = findUser(args[USER_ARG]);
     if (!currUser) throw NotFoundEx();
-    if (currUser->authenticates(args[pass])) return;
+    if (currUser->authenticates(args[PASS_ARG])) return;
     currUser = NULL;
     throw PermissionDeniedEx();
 }
@@ -57,34 +68,66 @@ void UTKala::logout() {
     currUser = NULL;
 }
 
-void UTKala::increaseCredit(vector<ss> args) {
-    if (stoi(args[0]) <= 0) throw BadRequestEx();
-    currUser->increaseCredit(stoi(args[0]));
+void UTKala::increaseCredit(ArgsMap args) {
+    const std::string AMOUNT_ARG = "amount";
+
+    if (stoi(args[AMOUNT_ARG]) <= 0) throw BadRequestEx();
+    currUser->increaseCredit(stoi(args[AMOUNT_ARG]));
 }
 
 void UTKala::showWalletBallance() {
     currUser->showCredit();
 }
 
-void UTKala::showProducts(
-    bool filter_username, const std::string& username, bool filter_price, int min, int max
-) {
-    if (products.empty())
+void UTKala::showProducts(ArgsMap args) {
+    const std::string SELLER_ARG = "seller_username";
+    const std::string SORT_ARG = "sort_by";
+
+    if (products.empty()) {
         std::cout << "Empty\n";
+        return;
+    }
+
+    bool filter_username = args.find(SELLER_ARG) != args.end();
+    bool sort_price = args.find(SORT_ARG) != args.end();
+
+    // TODO check ordering
+    if (sort_price) {
+        if (args[SORT_ARG] == "lowest_price") {
+            std::sort(
+                products.begin(), products.end(),
+                [](const Product* p1, const Product* p2) {
+                    return p1->getPrice() < p2->getPrice();
+                }
+            );
+        }
+        else {
+            std::sort(
+                products.begin(), products.end(),
+                [](const Product* p1, const Product* p2) {
+                    return p1->getPrice() > p2->getPrice();
+                }
+            );
+        }
+    }
     for (const auto& product : products) {
-        if (filter_username && !product->matchUsername(username))
-            continue;
-        if (filter_price && !product->matchPrice(min, max))
+        if (filter_username && !product->matchUsername(args[SELLER_ARG]))
             continue;
         std::cout << product->toString();
     }
 }
 
-void UTKala::buyItem(int item_id, int count, bool diff_city) {
+void UTKala::buyItem(ArgsMap args) {
+    const std::string ID_ARG = "id";
+    const std::string COUNT_ARG = "count";
+    const std::string CITY_ARG = "city";
+
+    bool diff_city = args.find(CITY_ARG) != args.end();
+
     Product* to_buy = nullptr;
     try {
-        to_buy = findProduct(item_id);
-        long long final_price = currUser->buyProduct(to_buy, count, diff_city);
+        to_buy = findProduct(std::stoi(args[ID_ARG]));
+        long long final_price = currUser->buyProduct(to_buy, std::stoi(args[COUNT_ARG]), diff_city);
         std::cout << "total_cost : " << final_price << '\n';
     }
     catch (const std::exception& e) {

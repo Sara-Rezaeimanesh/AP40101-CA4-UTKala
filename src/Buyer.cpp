@@ -1,7 +1,7 @@
 #include <Buyer.hpp>
 #include <iostream>
 
-#include "../include/Product.hpp"
+#include "Product.hpp"
 
 void Buyer::increaseCredit(int amount) {
     credit += amount;
@@ -12,6 +12,7 @@ void Buyer::showCredit() {
 }
 
 long long int Buyer::buyProduct(Product* to_buy, int amount, bool diff_city) {
+    //TODO handle different city being actually the same city
     int final_price = 0;
     try {
         final_price = to_buy->try_buy(amount);

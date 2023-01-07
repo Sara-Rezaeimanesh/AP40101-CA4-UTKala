@@ -16,8 +16,8 @@ public:
     );
 
     int getId() const;
+    long long int getPrice() const;
     bool matchUsername(const std::string& username) const;
-    bool matchPrice(int min, int max) const;
     long long int try_buy(int amount);
     long long int buy(int amount);
     std::string toString() const;

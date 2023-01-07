@@ -1,9 +1,10 @@
 #ifndef __BUYER_HPP__
 #define __BUYER_HPP__
 
-#include <User.hpp>
-#include <define.hpp>
 #include <string>
+
+#include "User.hpp"
+#include "define.hpp"
 
 constexpr int diff_city_shipping = 2000;
 constexpr int same_city_shipping = 1000;
