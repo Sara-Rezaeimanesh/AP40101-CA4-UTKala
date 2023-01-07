@@ -6,12 +6,12 @@ CC= g++ -std=c++11
 CCFLAGS= -Wall -Werror -pedantic -I$(IDIR)
 
 _DEPS= Buyer.hpp User.hpp CommandHandler.hpp define.hpp \
-Seller.hpp UTKala.hpp OutputHandler.hpp Exceptions.hpp
+Seller.hpp UTKala.hpp OutputHandler.hpp Exceptions.hpp Product.hpp
 
 DEPS=$(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _OBJ= main.o User.o Buyer.o CommandHandler.o \
-Seller.o UTKala.o OutputHandler.o
+Seller.o UTKala.o OutputHandler.o Product.o
 
 OBJ=$(patsubst %,$(ODIR)/%,$(_OBJ))
 
