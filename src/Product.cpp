@@ -20,6 +20,14 @@ Product::Product(
     quantity_(quantity),
     purchased_count_(0) {}
 
+bool Product::matchUsername(const std::string& username) const {
+    return seller_username_ == username;
+}
+
+bool Product::matchPrice(int min, int max) const {
+    return price_ <= max && price_ >= min;
+}
+
 std::string Product::toString() const {
     std::ostringstream stream;
     stream << "id : " << id_ << '\n';

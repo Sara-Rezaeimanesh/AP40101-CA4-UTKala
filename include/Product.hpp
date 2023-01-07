@@ -15,6 +15,8 @@ public:
         int quantity
     );
 
+    bool matchUsername(const std::string& username) const;
+    bool matchPrice(int min, int max) const;
     std::string toString() const;
 
 private:
