@@ -53,6 +53,6 @@ vector<ss> CommandHandler::findArgs(vector<ss> argNames) {
                 break;
             }
     
-    if(argNames.size() != pos.size()) throw NotFoundEx();
+    if(argNames.size() != pos.size()) throw BadRequestEx();
     return pos;
 }

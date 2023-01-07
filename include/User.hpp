@@ -9,9 +9,10 @@ class User {
 public:
     User() { user = "default"; };
     User(ss user, ss pass, ss city) : user(user), pass(pass), city(city) {};
-    int userEquals(ss user_, ss pass_);
+    int userNameMatches(ss user_);
     ss toString() {return user+" "+pass+" "+city;}
     bool isDefault() { return user =="default"; }
+    bool authenticates(ss pass_) { return pass == pass_; }
     virtual void increaseCredit(int amount) { throw BadRequestEx(); };
     virtual void showCredit() { throw BadRequestEx(); }
 protected:

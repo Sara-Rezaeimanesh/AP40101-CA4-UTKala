@@ -21,7 +21,7 @@ public:
 private:
     User* currUser;
     std::vector<User*> users;
-    User* findUser(ss user, ss pass);
+    User* findUser(ss user);
     void checkUserExistsViolation(ss user_, ss pass_);
     void ckeckUserRoleIsValid(ss role);
 };

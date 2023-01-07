@@ -7,10 +7,8 @@
 using namespace std;
 
 void UTKala::checkUserExistsViolation(ss user_, ss pass_) {
-    try {
-        User* u = findUser(user_, pass_);
-        if(u) throw BadRequestEx();
-    } catch(PermissionDeniedEx& ex) { throw BadRequestEx(); }
+    User* u = findUser(user_);
+    if(u) throw BadRequestEx();
 }
 
 void UTKala::ckeckUserRoleIsValid(ss role) {
@@ -26,16 +24,21 @@ void UTKala::signup(vector<ss> args) {
         users.push_back(new Buyer(args[user], args[pass], args[city]));
     else
         users.push_back(new Seller(args[user], args[pass], args[city]));
+
+    currUser = users[users.size()-1];
 }
 
 void UTKala::login(vector<ss> args) {    
-    currUser = findUser(args[user], args[pass]);
+    currUser = findUser(args[user]);
     if(!currUser) throw NotFoundEx();
+    if(currUser->authenticates(args[pass])) return;
+    currUser = NULL;
+    throw PermissionDeniedEx(); 
 }
 
-User* UTKala::findUser(ss user, ss pass) {
+User* UTKala::findUser(ss user) {
     for(User* u : users) 
-        if(u->userEquals(user, pass))
+        if(u->userNameMatches(user))
             return u;
     
     return NULL;
