@@ -14,6 +14,7 @@ public:
     Seller(ss user, ss pass, ss city) : User(user, pass, city) {};
 
     long long int buyProduct(Product* to_buy, int amount, bool diff_city = false) { throw BadRequestEx(); };
+    void refund(int purchase_id) { throw BadRequestEx(); };
 
 private:
 };

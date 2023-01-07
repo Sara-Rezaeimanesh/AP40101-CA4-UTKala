@@ -12,7 +12,8 @@ public:
         std::string category,
         std::string date,
         long long int price,
-        int quantity
+        int quantity,
+        int refund_percentage = -1
     );
 
     int getId() const;
@@ -20,6 +21,7 @@ public:
     bool matchUsername(const std::string& username) const;
     long long int try_buy(int amount);
     long long int buy(int amount);
+    long long int refund(int amount);
     std::string toString() const;
 
 private:
@@ -31,6 +33,8 @@ private:
     long long int price_;
     int quantity_;
     int purchased_count_;
+
+    int refund_percentage_;
 };
 
 #endif

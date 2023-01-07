@@ -134,3 +134,9 @@ void UTKala::buyItem(ArgsMap args) {
         throw e;
     }
 }
+
+void UTKala::refund(ArgsMap args) {
+    const std::string P_ID = "purchased_id";
+
+    currUser->refund(std::stoi(args[P_ID]));
+}

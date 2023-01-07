@@ -21,6 +21,7 @@ public:
     virtual void increaseCredit(int amount) { throw BadRequestEx(); };
     virtual void showCredit() { throw BadRequestEx(); }
     virtual long long int buyProduct(Product* to_buy, int amount, bool diff_city = false) = 0;
+    virtual void refund(int purchase_id) = 0;
 
 protected:
     ss user;

@@ -12,7 +12,8 @@ Product::Product(
     std::string category,
     std::string date,
     long long int price,
-    int quantity
+    int quantity,
+    int refund_percentage
 ) : id_(id),
     name_(name),
     seller_username_(seller_username),
@@ -20,7 +21,8 @@ Product::Product(
     date_(date),
     price_(price),
     quantity_(quantity),
-    purchased_count_(0) {}
+    purchased_count_(0),
+    refund_percentage_(refund_percentage) {}
 
 int Product::getId() const { return id_; }
 
@@ -40,6 +42,14 @@ long long int Product::buy(int amount) {
     long long int final_price = try_buy(amount);
     quantity_ -= amount;
     return final_price;
+}
+
+long long int Product::refund(int amount) {
+    if (refund_percentage_ == -1)
+        throw BadRequestEx();
+
+    quantity_ += amount;
+    return (amount * price_) * refund_percentage_;
 }
 
 std::string Product::toString() const {

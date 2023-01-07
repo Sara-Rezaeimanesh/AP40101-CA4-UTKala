@@ -21,6 +21,7 @@ public:
     void showWalletBallance();
     void showProducts(ArgsMap args);
     void buyItem(ArgsMap args);
+    void refund(ArgsMap args);
 
 private:
     User* currUser;
