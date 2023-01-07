@@ -46,6 +46,10 @@ void CommandHandler::executeCommand(ss command) {
         utk->increaseCredit(findArgs(commandArgs[name]));
     if (name == "wallet_balance")
         utk->showWalletBallance();
+    if (name == "list_items")
+        utk->showProducts(findArgs(commandArgs[name]));
+    if (name == "buy_item")
+        utk->buyItem(findArgs(commandArgs[name]));
 
     args.clear();
 }
