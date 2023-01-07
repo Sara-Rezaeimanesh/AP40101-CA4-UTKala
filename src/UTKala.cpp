@@ -18,6 +18,13 @@ void UTKala::checkUserRoleIsValid(ss role) {
         throw BadRequestEx();
 }
 
+Product* UTKala::findProduct(int item_id) {
+    for (auto& product : products)
+        if (product->getId() == item_id)
+            return product;
+    throw NotFoundEx();
+}
+
 void UTKala::signup(vector<ss> args) {
     checkUserExistsViolation(args[user], args[pass]);
     checkUserRoleIsValid(args[role]);
@@ -70,5 +77,17 @@ void UTKala::showProducts(
         if (filter_price && !product->matchPrice(min, max))
             continue;
         std::cout << product->toString();
+    }
+}
+
+void UTKala::buyItem(int item_id, int count, bool diff_city) {
+    Product* to_buy = nullptr;
+    try {
+        to_buy = findProduct(item_id);
+        long long final_price = currUser->buyProduct(to_buy, count, diff_city);
+        std::cout << "total_cost : " << final_price << '\n';
+    }
+    catch (const std::exception& e) {
+        throw e;
     }
 }

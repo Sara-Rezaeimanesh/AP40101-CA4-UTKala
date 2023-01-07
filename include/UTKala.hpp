@@ -25,6 +25,7 @@ public:
     void showProducts(
         bool filter_username, const ss& username, bool filter_price, int min, int max
     );
+    void buyItem(int item_id, int count, bool diff_city);
 
 private:
     User* currUser;
@@ -33,6 +34,7 @@ private:
     User* findUser(ss user);
     void checkUserExistsViolation(ss user_, ss pass_);
     void checkUserRoleIsValid(ss role);
+    Product* findProduct(int item_id);
 };
 
 #endif

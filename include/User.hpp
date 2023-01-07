@@ -5,6 +5,8 @@
 #include <define.hpp>
 #include <Exceptions.hpp>
 
+class Product;
+
 class User {
 public:
     User() { user = "default"; };
@@ -15,6 +17,7 @@ public:
     bool authenticates(ss pass_) { return pass == pass_; }
     virtual void increaseCredit(int amount) { throw BadRequestEx(); };
     virtual void showCredit() { throw BadRequestEx(); }
+    virtual long long int buyProduct(Product* to_buy, int amount, bool diff_city = false) = 0;
 protected:
     ss user;
     ss pass;

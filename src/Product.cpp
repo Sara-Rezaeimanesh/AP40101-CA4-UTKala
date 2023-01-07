@@ -3,6 +3,8 @@
 #include <sstream>
 #include <string>
 
+#include "../include/Exceptions.hpp"
+
 Product::Product(
     int id,
     std::string name,
@@ -20,12 +22,26 @@ Product::Product(
     quantity_(quantity),
     purchased_count_(0) {}
 
+int Product::getId() const { return id_; }
+
 bool Product::matchUsername(const std::string& username) const {
     return seller_username_ == username;
 }
 
 bool Product::matchPrice(int min, int max) const {
     return price_ <= max && price_ >= min;
+}
+
+long long int Product::try_buy(int amount) {
+    if (amount > quantity_)
+        throw BadRequestEx();
+    return price_ * amount;
+}
+
+long long int Product::buy(int amount) {
+    long long int final_price = try_buy(amount);
+    quantity_ -= amount;
+    return final_price;
 }
 
 std::string Product::toString() const {
