@@ -23,6 +23,8 @@ public:
         commandArgs["signup"] = std::vector<ss> {"username", "password", "role", "address"};
         commandArgs["login"] = std::vector<ss> {"username", "password"};
         commandArgs["increase_credit"] = std::vector<ss> {"amount"};
+        commandArgs["list_items"] = std::vector<ss> {"sort_by", "seller_username"};
+        commandArgs["buy_item"] = std::vector<ss> {"id", "count", "city"};
     };
     ~CommandHandler();
     void runInputs();
