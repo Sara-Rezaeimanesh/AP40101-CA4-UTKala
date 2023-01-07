@@ -37,7 +37,7 @@ void CommandHandler::executeCommand(ss command) {
     if(name == "logout")
         utk->logout();
     if(name == "increase_credit")
-        utk->inreseCredit(findArgs(commandArgs[name]));
+        utk->increaseCredit(findArgs(commandArgs[name]));
     if(name == "wallet_balance")
         utk->showWalletBallance();
 

@@ -11,14 +11,14 @@ void UTKala::checkUserExistsViolation(ss user_, ss pass_) {
     if(u) throw BadRequestEx();
 }
 
-void UTKala::ckeckUserRoleIsValid(ss role) {
+void UTKala::checkUserRoleIsValid(ss role) {
     if(role != "buyer" && role != "seller")
         throw BadRequestEx();
 }
 
 void UTKala::signup(vector<ss> args) {
     checkUserExistsViolation(args[user], args[pass]);
-    ckeckUserRoleIsValid(args[role]);
+    checkUserRoleIsValid(args[role]);
 
     if(args[role] == "buyer")
         users.push_back(new Buyer(args[user], args[pass], args[city]));
@@ -48,7 +48,7 @@ void UTKala::logout() {
     currUser = NULL;
 }
 
-void UTKala::inreseCredit(vector<ss> args) {
+void UTKala::increaseCredit(vector<ss> args) {
     if(stoi(args[0]) <= 0) throw BadRequestEx();
     currUser->increaseCredit(stoi(args[0]));
 }
