@@ -6,7 +6,6 @@
 class Product {
 public:
     Product(
-        int id,
         std::string name,
         std::string seller_username,
         std::string category,

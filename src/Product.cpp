@@ -5,8 +5,9 @@
 
 #include "Exceptions.hpp"
 
+static int last_used_id = 0;
+
 Product::Product(
-    int id,
     std::string name,
     std::string seller_username,
     std::string category,
@@ -14,7 +15,7 @@ Product::Product(
     long long int price,
     int quantity,
     int refund_percentage
-) : id_(id),
+) : id_(++last_used_id),
     name_(name),
     seller_username_(seller_username),
     category_(category),
