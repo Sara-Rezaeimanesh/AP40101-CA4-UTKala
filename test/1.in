@@ -1,0 +1,4 @@
+POST signup ? username ali password 123123 role buyer address Karaj
+POST login ? username ali password 123123
+POST increase_credit ? amount 10
+GET wallet_balance
