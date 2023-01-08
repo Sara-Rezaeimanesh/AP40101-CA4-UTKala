@@ -52,6 +52,8 @@ void CommandHandler::executeCommand(ss command) {
         utk->buyItem(findArgs(commandArgs[name]));
     if (name == "refund")
         utk->refund(findArgs(commandArgs[name]));
+    if (name == "add_item")
+        utk->addProduct(findArgs(commandArgs[name]));
 
     args.clear();
 }

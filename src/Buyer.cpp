@@ -52,6 +52,12 @@ void Buyer::refund(int purchase_id) {
     }
 }
 
+Product* Buyer::addProduct(
+    const std::string& name, long long price, const std::string& category, int quantity, int refund
+) {
+    throw BadRequestEx();
+}
+
 Buyer::Purchase& Buyer::find_purchase(int purchase_id) {
     for (auto& p : purchase_list_)
         if (p.id == purchase_id)

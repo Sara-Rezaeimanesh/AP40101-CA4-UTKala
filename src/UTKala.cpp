@@ -140,3 +140,32 @@ void UTKala::refund(ArgsMap args) {
 
     currUser->refund(std::stoi(args[P_ID]));
 }
+
+void UTKala::addProduct(ArgsMap args) {
+    const std::string NAME_ARG = "name";
+    const std::string PRICE_ARG = "price";
+    const std::string CAT_ARG = "category";
+    const std::string QUANTITY_ARG = "quantity";
+    const std::string REFUND_ARG = "refund";
+
+    int refund = (args.find(REFUND_ARG) == args.end()) ?
+                     -1 :
+                     std::stoi(args[REFUND_ARG]);
+
+    int quantity = std::stoi(args[QUANTITY_ARG]);
+    long long price = std::stoll(args[PRICE_ARG]);
+    if (quantity < 0 || price < 0)
+        throw BadRequestEx();
+    if (refund < -1 || refund > 100)
+        throw BadRequestEx();
+
+    Product* new_product = currUser->addProduct(
+        args[NAME_ARG],
+        price,
+        args[CAT_ARG],
+        quantity,
+        refund
+    );
+    products.push_back(new_product);
+    std::cout << "id : " << new_product->getId() << '\n';
+}

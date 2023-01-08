@@ -18,6 +18,9 @@ public:
     void showCredit();
     long long int buyProduct(Product* to_buy, int amount, bool diff_city = false);
     void refund(int purchase_id);
+    Product* addProduct(
+        const std::string& name, long long price, const std::string& category, int quantity, int refund
+    );
 
 private:
     struct Purchase {

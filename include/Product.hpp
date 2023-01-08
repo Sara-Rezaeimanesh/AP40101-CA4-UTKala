@@ -15,6 +15,7 @@ public:
         int refund_percentage = -1
     );
 
+    std::string getName() const;
     int getId() const;
     long long int getPrice() const;
     bool matchUsername(const std::string& username) const;

@@ -25,6 +25,10 @@ Product::Product(
     purchased_count_(0),
     refund_percentage_(refund_percentage) {}
 
+std::string Product::getName() const {
+    return name_;
+}
+
 int Product::getId() const { return id_; }
 
 long long int Product::getPrice() const { return price_; }

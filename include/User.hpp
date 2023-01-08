@@ -22,6 +22,9 @@ public:
     virtual void showCredit() { throw BadRequestEx(); }
     virtual long long int buyProduct(Product* to_buy, int amount, bool diff_city = false) = 0;
     virtual void refund(int purchase_id) = 0;
+    virtual Product* addProduct(
+        const std::string& name, long long price, const std::string& category, int quantity, int refund
+    ) = 0;
 
 protected:
     ss user;
