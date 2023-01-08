@@ -4,9 +4,9 @@ POST add_item ? name milk price 120 category dairy quantity 60
 POST logout
 POST signup ? username ali password 123123 role buyer address Karaj
 POST login ? username ali password 123123
-POST increase_credit ? amount 1000
-POST buy_item ? id 1 count 5 city Karaj
+POST increase_credit ? amount 10000
+POST buy_item ? id 1 count 400 city Karaj
 POST buy_item ? id 2 count 5 city Karaj
-POST buy_item ? id 1 count 5 city Karaj
+POST buy_item ? id 3 count 5 city Karaj
 GET wallet_balance
 GET list_purchased

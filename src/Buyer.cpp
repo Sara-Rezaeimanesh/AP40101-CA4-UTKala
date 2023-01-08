@@ -76,7 +76,7 @@ void Buyer::printPurchased() {
     for(Purchase p : purchase_list_)
         std::cout << "id : " << p.id << std::endl
                     << "date : " << p.time_purchased 
-                    << p.bought_product->stringInfoForPurchase() 
+                    << p.bought_product->stringInfoForPurchase() << std::endl
                     << "purchased_count : " << p.amount << std::endl
                     << "delivery_cost : " << p.delivery_cost << std::endl
                     << "total_cost : " << p.total_cost << std::endl << std::endl;
