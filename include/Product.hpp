@@ -23,6 +23,7 @@ public:
     long long int buy(int amount);
     long long int refund(int amount);
     std::string toString() const;
+    std::string  stringInfoForPurchase() const;
 
 private:
     int id_;

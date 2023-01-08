@@ -29,7 +29,8 @@ ss CommandHandler::splitArgs(ss command) {
     while (commandStream >> cpart)
         args.push_back(cpart);
 
-    type == "POST" ? isPOST = 1 : isPOST = 0;
+    type == "POST" && name != "add_item" && name != "buy_item" 
+    ? isPOST = 1 : isPOST = 0;
     return name;
 }
 
@@ -54,6 +55,8 @@ void CommandHandler::executeCommand(ss command) {
         utk->refund(findArgs(commandArgs[name]));
     if (name == "add_item")
         utk->addProduct(findArgs(commandArgs[name]));
+    if (name == "list_purchased")
+        utk->printListPurchased();
 
     args.clear();
 }

@@ -25,6 +25,7 @@ public:
     virtual Product* addProduct(
         const std::string& name, long long price, const std::string& category, int quantity, int refund
     ) = 0;
+    virtual void printPurchased() { throw BadRequestEx(); }
 
 protected:
     ss user;

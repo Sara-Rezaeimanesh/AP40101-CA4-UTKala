@@ -69,3 +69,11 @@ std::string Product::toString() const {
     stream << "purchased_count : " << purchased_count_ << '\n';
     return stream.str();
 }
+
+std::string  Product::stringInfoForPurchase() const {
+    return "seller : " + seller_username_ + "\n"
+                + "item_id : " + std::to_string(id_) + "\n"
+                + "item_name : " + name_ + "\n" 
+                + "item_price : " + std::to_string(price_);
+
+}

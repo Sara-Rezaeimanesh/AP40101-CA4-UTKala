@@ -21,6 +21,7 @@ public:
     Product* addProduct(
         const std::string& name, long long price, const std::string& category, int quantity, int refund
     );
+    void printPurchased();
 
 private:
     struct Purchase {
@@ -28,12 +29,16 @@ private:
         int amount;
         int id;
         bool is_refunded = false;
+        ss time_purchased;
+        int total_cost;
+        int delivery_cost;
     };
 
     int credit_;
     std::vector<Purchase> purchase_list_;
 
     Purchase& find_purchase(int purchase_id);
+    int decideDeliveryPrice(bool diff_city);
 };
 
 #endif

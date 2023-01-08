@@ -23,6 +23,7 @@ public:
     void buyItem(ArgsMap args);
     void refund(ArgsMap args);
     void addProduct(ArgsMap args);
+    void printListPurchased();
 
 private:
     User* currUser;
