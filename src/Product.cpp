@@ -63,7 +63,7 @@ std::string Product::toString() const {
     stream << "name : " << name_ << '\n';
     stream << "seller : " << seller_username_ << '\n';
     stream << "category : " << category_ << '\n';
-    stream << "date : " << date_ << '\n';
+    stream << "date : " << date_;
     stream << "price : " << price_ << '\n';
     stream << "quantity : " << quantity_ << '\n';
     stream << "purchased_count : " << purchased_count_ << '\n';

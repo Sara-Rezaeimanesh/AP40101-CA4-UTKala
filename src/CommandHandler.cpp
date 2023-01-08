@@ -60,12 +60,9 @@ void CommandHandler::executeCommand(ss command) {
 
 ArgsMap CommandHandler::findArgs(vector<ss> argNames) {
     ArgsMap res_args;
-    for (const auto& arg_name : argNames)
-        res_args[arg_name] = "";
-
+    
+    //TODO check for garbage keys
     for (std::size_t i = 0; i < args.size(); i += 2) {
-        if (res_args.find(args[i]) == res_args.end())
-            throw BadRequestEx();
         res_args[args[i]] = args[i + 1];
     }
 
