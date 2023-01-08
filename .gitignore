@@ -1,0 +1,6 @@
+.vscode/
+main
+obj/
+*.o
+*.obj
+*.dll
