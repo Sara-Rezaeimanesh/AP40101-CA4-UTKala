@@ -72,7 +72,7 @@ void UTKala::increaseCredit(ArgsMap args) {
     const std::string AMOUNT_ARG = "amount";
 
     if (stoi(args[AMOUNT_ARG]) <= 0) throw BadRequestEx();
-    currUser->increaseCredit(stoi(args[AMOUNT_ARG]));
+    currUser->changeCredit(stoi(args[AMOUNT_ARG]));
 }
 
 void UTKala::showWalletBallance(ArgsMap args) {
@@ -136,6 +136,7 @@ void UTKala::buyItem(ArgsMap args) {
     Product* to_buy = nullptr;
     to_buy = findProduct(std::stoi(args[ID_ARG]));
     long long final_price = currUser->buyProduct(to_buy, std::stoi(args[COUNT_ARG]), diff_city);
+    to_buy->getOwner()->changeCredit(final_price);
     std::cout << "total_cost : " << final_price << '\n';
 }
 
@@ -201,4 +202,8 @@ void UTKala::showSubmittedProducts(ArgsMap args) {
         currUser->showSubmittedProducts(sort, args[SORT_ARG]);
     else
         currUser->showSubmittedProducts();
+}
+
+void UTKala::printRevenue(ArgsMap args) {
+    currUser->printRevenue();
 }

@@ -21,6 +21,7 @@ public:
     );
     void changeProductPrice(Product* product, long long new_price);
     void showSubmittedProducts(bool sort = false, const std::string& sort_mode = "") const;
+    void printRevenue() const;
 
 private:
     std::vector<Product*> products_list_;

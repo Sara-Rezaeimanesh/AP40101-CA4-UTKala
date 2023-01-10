@@ -8,6 +8,7 @@
 static int last_used_id = 0;
 
 Product::Product(
+    User* owner,
     std::string name,
     std::string seller_username,
     std::string category,
@@ -15,7 +16,8 @@ Product::Product(
     long long int price,
     int quantity,
     int refund_percentage
-) : id_(++last_used_id),
+) : owner_(owner),
+    id_(++last_used_id),
     name_(name),
     seller_username_(seller_username),
     category_(category),
@@ -35,6 +37,10 @@ long long int Product::getPrice() const { return price_; }
 
 int Product::getRefund(int spent_credit) const {
     return (spent_credit * refund_percentage_) / 100;
+}
+
+User* Product::getOwner() const {
+    return owner_;
 }
 
 bool Product::matchUsername(const std::string& username) const {

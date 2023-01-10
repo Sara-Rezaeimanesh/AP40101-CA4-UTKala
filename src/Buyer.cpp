@@ -10,10 +10,6 @@ bool Buyer::ownProduct(Product* product) {
     throw BadRequestEx();
 }
 
-void Buyer::increaseCredit(int amount) {
-    credit_ += amount;
-}
-
 void Buyer::showCredit() {
     std::cout << "wallet balance : " << credit_ << std::endl;
 }
@@ -53,8 +49,10 @@ void Buyer::refund(int purchase_id) {
     try {
         auto& found_purchase = find_purchase(purchase_id);
         found_purchase.bought_product->refund(found_purchase.amount);
-        credit_ += found_purchase.bought_product->getRefund(found_purchase.total_cost);
+        int refund_amount = found_purchase.bought_product->getRefund(found_purchase.total_cost);
+        changeCredit(refund_amount);
         found_purchase.is_refunded = true;
+        found_purchase.bought_product->getOwner()->changeCredit(refund_amount * -1);
     }
     catch (const std::exception& e) {
         throw e;
@@ -93,5 +91,9 @@ void Buyer::changeProductPrice(Product* product, long long new_price) {
 }
 
 void Buyer::showSubmittedProducts(bool sort, const std::string& sort_mode) const {
+    throw BadRequestEx();
+}
+
+void Buyer::printRevenue() const {
     throw BadRequestEx();
 }

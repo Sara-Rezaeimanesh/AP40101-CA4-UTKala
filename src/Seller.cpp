@@ -28,6 +28,7 @@ Product* Seller::addProduct(
 
     auto curr_time = std::time(nullptr);
     Product* new_product = new Product(
+        (User*)this,
         name,
         user,
         category,
@@ -76,4 +77,8 @@ void Seller::showSubmittedProducts(bool sort, const std::string& sort_mode) cons
     for (const auto& product : products_list_) {
         std::cout << product->toString();
     }
+}
+
+void Seller::printRevenue() const {
+    std::cout << "total revenue : " << credit_ << '\n';
 }

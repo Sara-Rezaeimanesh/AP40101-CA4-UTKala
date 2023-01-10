@@ -12,10 +12,8 @@ constexpr int same_city_shipping = 1000;
 
 class Buyer : public User {
 public:
-    Buyer(ss user, ss pass, ss city) : User(user, pass, city),
-                                       credit_(0) {};
+    Buyer(ss user, ss pass, ss city) : User(user, pass, city){};
     bool ownProduct(Product* product);
-    void increaseCredit(int amount);
     void showCredit();
     long long int buyProduct(Product* to_buy, int amount, bool diff_city = false);
     void refund(int purchase_id);
@@ -25,6 +23,7 @@ public:
     void printPurchased();
     void changeProductPrice(Product* product, long long new_price);
     void showSubmittedProducts(bool sort = false, const std::string& sort_mode = "") const;
+    void printRevenue() const;
 
 private:
     struct Purchase {
@@ -37,7 +36,6 @@ private:
         int delivery_cost;
     };
 
-    int credit_;
     std::vector<Purchase> purchase_list_;
 
     Purchase& find_purchase(int purchase_id);

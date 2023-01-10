@@ -3,9 +3,12 @@
 
 #include <string>
 
+class User;
+
 class Product {
 public:
     Product(
+        User* owner,
         std::string name,
         std::string seller_username,
         std::string category,
@@ -19,6 +22,7 @@ public:
     int getId() const;
     long long int getPrice() const;
     int getRefund(int spent_credit) const;
+    User* getOwner() const;
     bool matchUsername(const std::string& username) const;
     long long int tryBuy(int amount);
     long long int buy(int amount);
@@ -29,6 +33,7 @@ public:
 
 private:
     int id_;
+    User* owner_;
     std::string name_;
     std::string seller_username_;
     std::string category_;

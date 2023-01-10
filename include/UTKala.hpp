@@ -26,6 +26,7 @@ public:
     void printListPurchased(ArgsMap args);
     void changeProductPrice(ArgsMap args);
     void showSubmittedProducts(ArgsMap args);
+    void printRevenue(ArgsMap args);
 
 private:
     User* currUser;
