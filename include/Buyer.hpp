@@ -14,6 +14,7 @@ class Buyer : public User {
 public:
     Buyer(ss user, ss pass, ss city) : User(user, pass, city),
                                        credit_(0) {};
+    bool ownProduct(Product* product);
     void increaseCredit(int amount);
     void showCredit();
     long long int buyProduct(Product* to_buy, int amount, bool diff_city = false);
@@ -22,6 +23,7 @@ public:
         const std::string& name, long long price, const std::string& category, int quantity, int refund
     );
     void printPurchased();
+    void changeProductPrice(Product* product, long long new_price);
 
 private:
     struct Purchase {

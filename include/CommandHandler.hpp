@@ -27,6 +27,7 @@ public:
         commandArgs["buy_item"] = std::vector<ss> {"id", "count", "city"};
         commandArgs["refund"] = std::vector<ss> {"purchase_id"};
         commandArgs["add_item"] = std::vector<ss> {"name", "price", "category", "quantity", "refund"};
+        commandArgs["item_price"] = std::vector<ss> {"price", "id"};
     };
     ~CommandHandler();
     void runInputs();

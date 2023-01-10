@@ -22,6 +22,7 @@ public:
     long long int try_buy(int amount);
     long long int buy(int amount);
     long long int refund(int amount);
+    void changePrice(int new_price);
     std::string toString() const;
     std::string  stringInfoForPurchase() const;
 

@@ -24,6 +24,7 @@ public:
     void refund(ArgsMap args);
     void addProduct(ArgsMap args);
     void printListPurchased();
+    void changeProductPrice(ArgsMap args);
 
 private:
     User* currUser;

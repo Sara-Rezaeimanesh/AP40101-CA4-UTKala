@@ -7,6 +7,10 @@
 #include "Product.hpp"
 #include "Exceptions.hpp"
 
+bool Seller::ownProduct(Product* product) {
+    return product->matchUsername(user);
+}
+
 long long int Seller::buyProduct(Product* to_buy, int amount, bool diff_city) {
     throw BadRequestEx();
 }
@@ -34,6 +38,13 @@ Product* Seller::addProduct(
     products_list_.push_back(new_product);
 
     return new_product;
+}
+
+void Seller::changeProductPrice(Product* product, long long new_price) {
+    if (new_price < 0)
+        throw BadRequestEx();
+    
+    product->changePrice(new_price);
 }
 
 Product* Seller::findProduct(const std::string& p_name) {

@@ -57,6 +57,10 @@ long long int Product::refund(int amount) {
     return (amount * price_) * refund_percentage_;
 }
 
+void Product::changePrice(int new_price) {
+    price_ = new_price;
+}
+
 std::string Product::toString() const {
     std::ostringstream stream;
     stream << "id : " << id_ << '\n';

@@ -128,7 +128,6 @@ void UTKala::buyItem(ArgsMap args) {
     to_buy = findProduct(std::stoi(args[ID_ARG]));
     long long final_price = currUser->buyProduct(to_buy, std::stoi(args[COUNT_ARG]), diff_city);
     std::cout << "total_cost : " << final_price << '\n';
-
 }
 
 void UTKala::refund(ArgsMap args) {
@@ -168,4 +167,18 @@ void UTKala::addProduct(ArgsMap args) {
 
 void UTKala::printListPurchased() {
     currUser->printPurchased();
+}
+
+void UTKala::changeProductPrice(ArgsMap args) {
+    const std::string PRICE_ARG = "price";
+    const std::string ID_ARG = "id";
+
+    Product* found_product = findProduct(std::stoi(args[ID_ARG]));
+    if (found_product == nullptr)
+        throw NotFoundEx();
+
+    if (!currUser->ownProduct(found_product))
+        throw PermissionDeniedEx();
+
+    currUser->changeProductPrice(found_product, std::stoll(args[PRICE_ARG]));
 }

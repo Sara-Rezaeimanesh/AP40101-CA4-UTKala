@@ -18,6 +18,7 @@ public:
     ss toString() { return user + " " + pass + " " + city; }
     bool isDefault() { return user == "default"; }
     bool authenticates(ss pass_) { return pass == pass_; }
+    virtual bool ownProduct(Product* product) = 0;
     virtual void increaseCredit(int amount) { throw BadRequestEx(); };
     virtual void showCredit() { throw BadRequestEx(); }
     virtual long long int buyProduct(Product* to_buy, int amount, bool diff_city = false) = 0;
@@ -26,6 +27,7 @@ public:
         const std::string& name, long long price, const std::string& category, int quantity, int refund
     ) = 0;
     virtual void printPurchased() { throw BadRequestEx(); }
+    virtual void changeProductPrice(Product* product, long long new_price) = 0;
 
 protected:
     ss user;

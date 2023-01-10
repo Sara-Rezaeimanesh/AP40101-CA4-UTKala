@@ -1,9 +1,13 @@
 #include <Buyer.hpp>
-#include <iostream>
 #include <chrono>
-#include <ctime> 
+#include <ctime>
+#include <iostream>
 
 #include "Product.hpp"
+
+bool Buyer::ownProduct(Product* product) {
+    throw BadRequestEx();
+}
 
 void Buyer::increaseCredit(int amount) {
     credit_ += amount;
@@ -25,7 +29,6 @@ long long int Buyer::buyProduct(Product* to_buy, int amount, bool diff_city) {
 
     new_purchase.total_cost = final_price;
     new_purchase.delivery_cost = decideDeliveryPrice(diff_city);
-
 
     if (final_price > credit_)
         throw BadRequestEx();
@@ -70,14 +73,19 @@ Buyer::Purchase& Buyer::find_purchase(int purchase_id) {
 }
 
 void Buyer::printPurchased() {
-    if(!purchase_list_.size())
+    if (!purchase_list_.size())
         throw EmptyEx();
 
-    for(Purchase p : purchase_list_)
+    for (Purchase p : purchase_list_)
         std::cout << "id : " << p.id << std::endl
-                    << "date : " << p.time_purchased 
-                    << p.bought_product->stringInfoForPurchase() << std::endl
-                    << "purchased_count : " << p.amount << std::endl
-                    << "delivery_cost : " << p.delivery_cost << std::endl
-                    << "total_cost : " << p.total_cost << std::endl << std::endl;
+                  << "date : " << p.time_purchased
+                  << p.bought_product->stringInfoForPurchase() << std::endl
+                  << "purchased_count : " << p.amount << std::endl
+                  << "delivery_cost : " << p.delivery_cost << std::endl
+                  << "total_cost : " << p.total_cost << std::endl
+                  << std::endl;
+}
+
+void Buyer::changeProductPrice(Product* product, long long new_price) {
+    throw BadRequestEx();
 }

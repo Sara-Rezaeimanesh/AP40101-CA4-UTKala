@@ -57,6 +57,8 @@ void CommandHandler::executeCommand(ss command) {
         utk->addProduct(findArgs(commandArgs[name]));
     if (name == "list_purchased")
         utk->printListPurchased();
+    if (name == "item_price")
+        utk->changeProductPrice(findArgs(commandArgs[name]));
 
     args.clear();
 }
