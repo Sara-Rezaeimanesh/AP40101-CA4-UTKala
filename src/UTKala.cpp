@@ -1,13 +1,13 @@
-#include "UTKala.hpp"
+#include "../include/UTKala.hpp"
 
 #include <algorithm>
 #include <iostream>
 #include <unordered_map>
 
-#include "Buyer.hpp"
-#include "Exceptions.hpp"
-#include "Product.hpp"
-#include "Seller.hpp"
+#include "../include/Buyer.hpp"
+#include "../include/Exceptions.hpp"
+#include "../include/Product.hpp"
+#include "../include/Seller.hpp"
 
 using namespace std;
 
@@ -64,7 +64,7 @@ User* UTKala::findUser(ss user) {
     return NULL;
 }
 
-void UTKala::logout() {
+void UTKala::logout(ArgsMap args) {
     currUser = NULL;
 }
 
@@ -75,7 +75,7 @@ void UTKala::increaseCredit(ArgsMap args) {
     currUser->increaseCredit(stoi(args[AMOUNT_ARG]));
 }
 
-void UTKala::showWalletBallance() {
+void UTKala::showWalletBallance(ArgsMap args) {
     currUser->showCredit();
 }
 
@@ -165,7 +165,7 @@ void UTKala::addProduct(ArgsMap args) {
     std::cout << "id : " << new_product->getId() << '\n';
 }
 
-void UTKala::printListPurchased() {
+void UTKala::printListPurchased(ArgsMap args) {
     currUser->printPurchased();
 }
 

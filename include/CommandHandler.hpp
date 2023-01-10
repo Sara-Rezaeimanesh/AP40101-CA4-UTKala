@@ -18,33 +18,79 @@ class OutputHandler;
 class CommandHandler {
 public:
     CommandHandler() : utk(new UTKala()),
-                       oph(new OutputHandler()),
-                       isPOST(0) {
-        commandArgs["signup"] = std::vector<ss> {"username", "password", "role", "address"};
-        commandArgs["login"] = std::vector<ss> {"username", "password"};
-        commandArgs["increase_credit"] = std::vector<ss> {"amount"};
-        commandArgs["list_items"] = std::vector<ss> {"sort_by", "seller_username"};
-        commandArgs["buy_item"] = std::vector<ss> {"id", "count", "city"};
-        commandArgs["refund"] = std::vector<ss> {"purchase_id"};
-        commandArgs["add_item"] = std::vector<ss> {"name", "price", "category", "quantity", "refund"};
-        commandArgs["item_price"] = std::vector<ss> {"price", "id"};
+                       oph(new OutputHandler()) {
+        commands_list = {
+            Command("signup", Command::CmdType::POST, {"username", "password", "role", "address"}, {}, utk, &UTKala::signup),
+            Command("login", Command::CmdType::POST, {"username", "password"}, {}, utk, &UTKala::login),
+            Command("logout", Command::CmdType::POST, {}, {}, utk, &UTKala::logout),
+            Command("increase_credit", Command::CmdType::POST, {"amount"}, {}, utk, &UTKala::increaseCredit),
+            Command("wallet_balance", Command::CmdType::GET, {}, {}, utk, &UTKala::showWalletBallance),
+            Command("list_items", Command::CmdType::GET, {}, {"sort_by", "seller_username"}, utk, &UTKala::showProducts),
+            Command("buy_item", Command::CmdType::POST, {"id", "count"}, {"city"}, utk, &UTKala::buyItem),
+            Command("list_purchased", Command::CmdType::GET, {}, {}, utk, &UTKala::printListPurchased),
+            Command("refund", Command::CmdType::POST, {"purchased_id"}, {}, utk, &UTKala::refund),
+            Command("add_item", Command::CmdType::POST, {"name", "price", "category", "quantity"}, {"refund"}, utk, &UTKala::addProduct),
+            Command("item_price", Command::CmdType::PUT, {"price", "id"}, {}, utk, &UTKala::changeProductPrice)};
     };
     ~CommandHandler();
     void runInputs();
 
 private:
+    struct Command {
+        enum class CmdType {
+            POST,
+            GET,
+            PUT,
+            DELETE,
+            Undefined
+        };
+
+        using ArgsVec = std::vector<std::string>;
+        using ExecPointer = void (UTKala::*)(ArgsMap);
+
+        static Command::CmdType getType(const std::string& type_str);
+
+        Command(
+            const std::string& name,
+            CmdType type,
+            ArgsVec req_args,
+            ArgsVec opt_args,
+            UTKala* ut_kala,
+            ExecPointer executer
+        );
+
+        void execute(ArgsMap args);
+        bool isEqual(const std::string& name, CmdType type);
+
+        std::string name_;
+        CmdType type_;
+        ArgsVec req_args_; // required args
+        ArgsVec opt_args_; // optional args
+        UTKala* ut_kala_;
+        ExecPointer executer_; // the executer function
+
+    private:
+        bool checkRequiredArgs(const ArgsMap& args);
+
+    private:
+        bool hasGarbageArg(const ArgsMap& args);
+    };
+
     UTKala* utk;
     OutputHandler* oph;
-    std::vector<ss> args;
-    std::map<ss, std::vector<ss>> commandArgs;
-    /*in the next phase we must have three classe for each
-        type of command GET, POST, DELETE and get rid
-        of this atrocity!*/
-    bool isPOST;
+
+    std::vector<Command> commands_list;
+
+    struct {
+        std::vector<std::string> split_line;
+        Command::CmdType cmd_type;
+        ArgsMap args;
+    } curr_command;
 
     void executeCommand(ss command);
-    ss splitArgs(ss command);
-    ArgsMap findArgs(std::vector<ss> argNames);
+    void parseCommand(std::string command);
+    void splitCommand(const std::string& command);
+    void findArgs(std::vector<std::string> argNames);
 };
 
 #endif

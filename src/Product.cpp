@@ -1,9 +1,9 @@
-#include "Product.hpp"
+#include "../include/Product.hpp"
 
 #include <sstream>
 #include <string>
 
-#include "Exceptions.hpp"
+#include "../include/Exceptions.hpp"
 
 static int last_used_id = 0;
 

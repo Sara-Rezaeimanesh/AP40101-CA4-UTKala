@@ -1,11 +1,11 @@
-#include "Seller.hpp"
+#include "../include/Seller.hpp"
 
 #include <ctime>
 #include <string>
 #include <vector>
 
-#include "Product.hpp"
-#include "Exceptions.hpp"
+#include "../include/Product.hpp"
+#include "../include/Exceptions.hpp"
 
 bool Seller::ownProduct(Product* product) {
     return product->matchUsername(user);

@@ -8,5 +8,6 @@ POST increase_credit ? amount 10000
 POST buy_item ? id 1 count 400 city Karaj
 POST buy_item ? id 2 count 5 city Karaj
 POST buy_item ? id 3 count 5 city Karaj
+POST refund ? purchase_id 0
 GET wallet_balance
 GET list_purchased

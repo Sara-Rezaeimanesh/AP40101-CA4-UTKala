@@ -1,9 +1,10 @@
-#include <Buyer.hpp>
+#include "../include/Buyer.hpp"
+
 #include <chrono>
 #include <ctime>
 #include <iostream>
 
-#include "Product.hpp"
+#include "../include/Product.hpp"
 
 bool Buyer::ownProduct(Product* product) {
     throw BadRequestEx();

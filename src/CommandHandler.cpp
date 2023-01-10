@@ -1,9 +1,10 @@
-#include "CommandHandler.hpp"
+#include "../include/CommandHandler.hpp"
 
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 
-#include "Exceptions.hpp"
+#include "../include/Exceptions.hpp"
 
 using namespace std;
 
@@ -14,62 +15,107 @@ void CommandHandler::runInputs() {
     while (getline(cin, command))
         try {
             executeCommand(command);
-            if (isPOST) oph->showStat("OK\n");
         }
         catch (std::exception& ex) {
             oph->showStat(ex.what());
         }
 }
+CommandHandler::Command::CmdType CommandHandler::Command::getType(const std::string& type_str) {
+    if (type_str == "POST")
+        return CommandHandler::Command::CmdType::POST;
+    if (type_str == "PUT")
+        return CommandHandler::Command::CmdType::PUT;
+    if (type_str == "DELETE")
+        return CommandHandler::Command::CmdType::DELETE;
+    if (type_str == "GET")
+        return CommandHandler::Command::CmdType::GET;
 
-ss CommandHandler::splitArgs(ss command) {
-    stringstream commandStream(command);
-    string type, name, qm, cpart;
+    return CommandHandler::Command::CmdType::Undefined;
+}
 
-    commandStream >> type >> name >> qm;
-    while (commandStream >> cpart)
-        args.push_back(cpart);
+CommandHandler::Command::Command(
+    const std::string& name,
+    CmdType type,
+    ArgsVec req_args,
+    ArgsVec opt_args,
+    UTKala* ut_kala,
+    ExecPointer executer
+)
+    : name_(name),
+      type_(type),
+      req_args_(req_args),
+      opt_args_(opt_args),
+      ut_kala_(ut_kala),
+      executer_(executer) {}
 
-    type == "POST" && name != "add_item" && name != "buy_item" 
-    ? isPOST = 1 : isPOST = 0;
-    return name;
+void CommandHandler::Command::execute(ArgsMap args) {
+    if (!checkRequiredArgs(args))
+        throw BadRequestEx();
+    if (hasGarbageArg(args))
+        throw BadRequestEx();
+    (ut_kala_->*executer_)(args);
+}
+
+bool CommandHandler::Command::isEqual(const std::string& name, CmdType type) {
+    return type_ == type && name_ == name;
+}
+
+bool CommandHandler::Command::checkRequiredArgs(const ArgsMap& args) {
+    for (const auto& req_arg : req_args_)
+        if (args.find(req_arg) == args.end())
+            return false;
+    return true;
+}
+
+bool CommandHandler::Command::hasGarbageArg(const ArgsMap& args) {
+    for (const auto& arg_pair : args) {
+        if (std::find(req_args_.begin(), req_args_.end(), arg_pair.first) != req_args_.end())
+            continue;
+        if (std::find(opt_args_.begin(), opt_args_.end(), arg_pair.first) != opt_args_.end())
+            continue;
+        return true;
+    }
+    return false;
+}
+
+void CommandHandler::parseCommand(std::string command) {
+    const int TYPE_IDX = 0;
+    const int ARGS_START_IDX = 3;
+
+    splitCommand(command);
+    curr_command.cmd_type = Command::getType(curr_command.split_line[TYPE_IDX]);
+    std::vector<std::string> args_vec;
+    if (curr_command.split_line.size() > 3)
+        args_vec = std::vector<std::string>(
+            curr_command.split_line.begin() + ARGS_START_IDX, curr_command.split_line.end()
+        );
+    findArgs(args_vec);
+}
+
+void CommandHandler::splitCommand(const std::string& command) {
+    curr_command.split_line.clear();
+    std::istringstream cmd_stream(command);
+    std::string temp;
+    while (cmd_stream >> temp)
+        curr_command.split_line.push_back(temp);
 }
 
 void CommandHandler::executeCommand(ss command) {
-    ss name = splitArgs(command);
+    const int NAME_IDX = 1;
 
-    if (name == "signup")
-        utk->signup(findArgs(commandArgs[name]));
-    if (name == "login")
-        utk->login(findArgs(commandArgs[name]));
-    if (name == "logout")
-        utk->logout();
-    if (name == "increase_credit")
-        utk->increaseCredit(findArgs(commandArgs[name]));
-    if (name == "wallet_balance")
-        utk->showWalletBallance();
-    if (name == "list_items")
-        utk->showProducts(findArgs(commandArgs[name]));
-    if (name == "buy_item")
-        utk->buyItem(findArgs(commandArgs[name]));
-    if (name == "refund")
-        utk->refund(findArgs(commandArgs[name]));
-    if (name == "add_item")
-        utk->addProduct(findArgs(commandArgs[name]));
-    if (name == "list_purchased")
-        utk->printListPurchased();
-    if (name == "item_price")
-        utk->changeProductPrice(findArgs(commandArgs[name]));
-
-    args.clear();
+    parseCommand(command);
+    for (auto& cmd : commands_list) {
+        if (cmd.isEqual(curr_command.split_line[NAME_IDX], curr_command.cmd_type)) {
+            cmd.execute(curr_command.args);
+            std::cout << "OK\n";
+            return;
+        }
+    }
+    throw BadRequestEx();
 }
 
-ArgsMap CommandHandler::findArgs(vector<ss> argNames) {
-    ArgsMap res_args;
-    
-    //TODO check for garbage keys
-    for (std::size_t i = 0; i < args.size(); i += 2) {
-        res_args[args[i]] = args[i + 1];
-    }
-
-    return res_args;
+void CommandHandler::findArgs(vector<ss> argNames) {
+    curr_command.args.clear();
+    for (std::size_t i = 0; i < argNames.size(); i += 2)
+        curr_command.args[argNames[i]] = argNames[i + 1];
 }

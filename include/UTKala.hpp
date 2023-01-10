@@ -16,14 +16,14 @@ class UTKala {
 public:
     void signup(ArgsMap args);
     void login(ArgsMap args);
-    void logout();
+    void logout(ArgsMap args);
     void increaseCredit(ArgsMap args);
-    void showWalletBallance();
+    void showWalletBallance(ArgsMap args);
     void showProducts(ArgsMap args);
     void buyItem(ArgsMap args);
     void refund(ArgsMap args);
     void addProduct(ArgsMap args);
-    void printListPurchased();
+    void printListPurchased(ArgsMap args);
     void changeProductPrice(ArgsMap args);
 
 private:

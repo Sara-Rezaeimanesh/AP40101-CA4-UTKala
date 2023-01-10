@@ -1,0 +1,27 @@
+OK
+id : 1
+OK
+id : 2
+OK
+OK
+OK
+OK
+OK
+Bad Request
+total_cost : 2600
+OK
+Not Found
+Bad Request
+wallet balance : 7400
+OK
+id : 1
+date : Tue Jan 10 19:51:20 2023
+seller : karim
+item_id : 2
+item_name : milk
+item_price : 120
+purchased_count : 5
+delivery_cost : 2000
+total_cost : 600
+
+OK
