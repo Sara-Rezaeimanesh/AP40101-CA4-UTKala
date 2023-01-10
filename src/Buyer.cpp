@@ -91,3 +91,7 @@ void Buyer::printPurchased() {
 void Buyer::changeProductPrice(Product* product, long long new_price) {
     throw BadRequestEx();
 }
+
+void Buyer::showSubmittedProducts(bool sort, const std::string& sort_mode) const {
+    throw BadRequestEx();
+}

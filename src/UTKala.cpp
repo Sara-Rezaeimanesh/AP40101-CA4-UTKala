@@ -191,3 +191,14 @@ void UTKala::changeProductPrice(ArgsMap args) {
 
     currUser->changeProductPrice(found_product, std::stoll(args[PRICE_ARG]));
 }
+
+void UTKala::showSubmittedProducts(ArgsMap args) {
+    const std::string SORT_ARG = "sort_by";
+
+    bool sort = args.find(SORT_ARG) != args.end();
+
+    if (sort)
+        currUser->showSubmittedProducts(sort, args[SORT_ARG]);
+    else
+        currUser->showSubmittedProducts();
+}

@@ -28,6 +28,7 @@ public:
     ) = 0;
     virtual void printPurchased() { throw BadRequestEx(); }
     virtual void changeProductPrice(Product* product, long long new_price) = 0;
+    virtual void showSubmittedProducts(bool sort = false, const std::string& sort_mode = "") const = 0;
 
 protected:
     ss user;

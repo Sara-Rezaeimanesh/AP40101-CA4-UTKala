@@ -24,6 +24,7 @@ public:
     );
     void printPurchased();
     void changeProductPrice(Product* product, long long new_price);
+    void showSubmittedProducts(bool sort = false, const std::string& sort_mode = "") const;
 
 private:
     struct Purchase {

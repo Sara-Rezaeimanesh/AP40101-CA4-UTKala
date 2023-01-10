@@ -30,7 +30,9 @@ public:
             Command("list_purchased", Command::CmdType::GET, {}, {}, utk, &UTKala::printListPurchased),
             Command("refund", Command::CmdType::POST, {"purchased_id"}, {}, utk, &UTKala::refund),
             Command("add_item", Command::CmdType::POST, {"name", "price", "category", "quantity"}, {"refund"}, utk, &UTKala::addProduct),
-            Command("item_price", Command::CmdType::PUT, {"price", "id"}, {}, utk, &UTKala::changeProductPrice)};
+            Command("item_price", Command::CmdType::PUT, {"price", "id"}, {}, utk, &UTKala::changeProductPrice),
+            Command("list_items", Command::CmdType::GET, {}, {"sort_by"}, utk, &UTKala::showSubmittedProducts)
+        };
     };
     ~CommandHandler();
     void runInputs();
