@@ -115,6 +115,15 @@ void UTKala::showProducts(ArgsMap args) {
             continue;
         std::cout << product->toString();
     }
+
+    if (sort_price) {
+        std::sort(
+            products.begin(), products.end(),
+            [](const Product* p1, const Product* p2) {
+                return p1->getId() < p2->getId();
+            }
+        );
+    }
 }
 
 void UTKala::buyItem(ArgsMap args) {
