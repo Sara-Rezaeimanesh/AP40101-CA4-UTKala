@@ -33,28 +33,31 @@ int Product::getId() const { return id_; }
 
 long long int Product::getPrice() const { return price_; }
 
+int Product::getRefund(int spent_credit) const {
+    return (spent_credit * refund_percentage_) / 100;
+}
+
 bool Product::matchUsername(const std::string& username) const {
     return seller_username_ == username;
 }
 
-long long int Product::try_buy(int amount) {
+long long int Product::tryBuy(int amount) {
     if (amount > quantity_)
         throw BadRequestEx();
     return price_ * amount;
 }
 
 long long int Product::buy(int amount) {
-    long long int final_price = try_buy(amount);
+    long long int final_price = tryBuy(amount);
     quantity_ -= amount;
     return final_price;
 }
 
-long long int Product::refund(int amount) {
+void Product::refund(int amount) {
     if (refund_percentage_ == -1)
         throw BadRequestEx();
 
     quantity_ += amount;
-    return (amount * price_) * refund_percentage_;
 }
 
 void Product::changePrice(int new_price) {

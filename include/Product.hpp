@@ -18,10 +18,11 @@ public:
     std::string getName() const;
     int getId() const;
     long long int getPrice() const;
+    int getRefund(int spent_credit) const;
     bool matchUsername(const std::string& username) const;
-    long long int try_buy(int amount);
+    long long int tryBuy(int amount);
     long long int buy(int amount);
-    long long int refund(int amount);
+    void refund(int amount);
     void changePrice(int new_price);
     std::string toString() const;
     std::string  stringInfoForPurchase() const;

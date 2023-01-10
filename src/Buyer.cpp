@@ -23,12 +23,12 @@ int Buyer::decideDeliveryPrice(bool diff_city) {
 
 long long int Buyer::buyProduct(Product* to_buy, int amount, bool diff_city) {
     // TODO handle different city being actually the same city
-    int final_price = 0;
     Purchase new_purchase;
-    final_price = to_buy->try_buy(amount) + decideDeliveryPrice(diff_city);
 
-    new_purchase.total_cost = final_price;
+    new_purchase.total_cost = to_buy->tryBuy(amount);
     new_purchase.delivery_cost = decideDeliveryPrice(diff_city);
+
+    int final_price = new_purchase.total_cost + new_purchase.delivery_cost;
 
     if (final_price > credit_)
         throw BadRequestEx();
@@ -51,7 +51,8 @@ long long int Buyer::buyProduct(Product* to_buy, int amount, bool diff_city) {
 void Buyer::refund(int purchase_id) {
     try {
         auto& found_purchase = find_purchase(purchase_id);
-        credit_ += found_purchase.bought_product->refund(found_purchase.amount);
+        found_purchase.bought_product->refund(found_purchase.amount);
+        credit_ += found_purchase.bought_product->getRefund(found_purchase.total_cost);
         found_purchase.is_refunded = true;
     }
     catch (const std::exception& e) {
