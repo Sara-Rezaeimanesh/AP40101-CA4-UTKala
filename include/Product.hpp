@@ -19,6 +19,7 @@ public:
     );
 
     std::string getName() const;
+    std::string getSellerUsername() const { return seller_username_; };
     int getId() const;
     long long int getPrice() const;
     int getRefund(int spent_credit) const;
@@ -32,8 +33,8 @@ public:
     std::string  stringInfoForPurchase() const;
 
 private:
-    int id_;
     User* owner_;
+    int id_;
     std::string name_;
     std::string seller_username_;
     std::string category_;

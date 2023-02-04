@@ -12,7 +12,7 @@ bool Seller::ownProduct(Product* product) {
     return product->matchUsername(user);
 }
 
-long long int Seller::buyProduct(Product* to_buy, int amount, bool diff_city) {
+long long int Seller::buyProduct(Product* to_buy, int amount, User* seller, bool diff_city) {
     throw BadRequestEx();
 }
 
@@ -81,4 +81,41 @@ void Seller::showSubmittedProducts(bool sort, const std::string& sort_mode) cons
 
 void Seller::printRevenue() const {
     std::cout << "total revenue : " << credit_ << '\n';
+}
+
+Product* Seller::findProductById(const int id) {
+    for (const auto& p : products_list_)
+        if (p->getId() == id)
+            return p;
+    return nullptr;
+}
+
+void Seller::deleteItem(int id) {
+
+    for (auto it = products_list_.begin(); it != products_list_.end(); ++it)
+        if ((*it)->getId() == id) {
+            products_list_.erase(it);
+            return;
+        }
+    throw NotFoundEx();
+}
+
+void Seller::listTransactions() {
+    for(auto t : transactions)
+        std::cout << t->to_string() << std::endl;
+}
+
+void Seller::addTransaction(Product* to_buy, int amount, long long int deliveryCost,
+                            long long int final_price, ss time_purchased, ss user) {
+    Transaction* t = new Transaction(transactions.size(), to_buy, user,
+                                         deliveryCost, final_price, amount, time_purchased);
+    transactions.push_back(t);
+
+}
+
+ss Transaction::to_string() {
+    return "id: " + std::to_string(id) + "\n" + "date: " + date + "\n" +
+            "item_id: " + std::to_string(product->getId()) + "\n" + "item_name" + product->getName()+
+            "\n" + "item_price: " + std::to_string(product->getPrice()) + "\n" + "purchased_count" 
+            + std::to_string(count) + "\n" + "delivery_cost: " + std::to_string(delivery) + "\n";
 }

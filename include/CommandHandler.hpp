@@ -32,7 +32,9 @@ public:
             Command("add_item", Command::CmdType::POST, {"name", "price", "category", "quantity"}, {"refund"}, utk, &UTKala::addProduct),
             Command("item_price", Command::CmdType::PUT, {"price", "id"}, {}, utk, &UTKala::changeProductPrice),
             Command("list_items", Command::CmdType::GET, {}, {"sort_by"}, utk, &UTKala::showSubmittedProducts),
-            Command("revenue", Command::CmdType::GET, {}, {}, utk, &UTKala::printRevenue)
+            Command("revenue", Command::CmdType::GET, {}, {}, utk, &UTKala::printRevenue),
+            Command("item", Command::CmdType::DELETE, {"id"}, {}, utk, &UTKala::deleteItem),
+            Command("list_transactions", Command::CmdType::GET, {}, {}, utk, &UTKala::listTransactions)
         };
     };
     ~CommandHandler();

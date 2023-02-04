@@ -135,7 +135,8 @@ void UTKala::buyItem(ArgsMap args) {
 
     Product* to_buy = nullptr;
     to_buy = findProduct(std::stoi(args[ID_ARG]));
-    long long final_price = currUser->buyProduct(to_buy, std::stoi(args[COUNT_ARG]), diff_city);
+    User* seller = findUser(to_buy->getSellerUsername());
+    long long final_price = currUser->buyProduct(to_buy, std::stoi(args[COUNT_ARG]), seller, diff_city);
     to_buy->getOwner()->changeCredit(final_price);
     std::cout << "total_cost : " << final_price << '\n';
 }
@@ -206,4 +207,13 @@ void UTKala::showSubmittedProducts(ArgsMap args) {
 
 void UTKala::printRevenue(ArgsMap args) {
     currUser->printRevenue();
+}
+
+void UTKala::deleteItem(ArgsMap args) {
+    const std::string ID = "id";
+    currUser->deleteItem(std::stoi(args[ID]));
+}
+
+void UTKala::listTransactions(ArgsMap args) {
+    currUser->listTransactions();
 }

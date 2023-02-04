@@ -18,7 +18,7 @@ int Buyer::decideDeliveryPrice(bool diff_city) {
     return diff_city ? diff_city_shipping : same_city_shipping;
 }
 
-long long int Buyer::buyProduct(Product* to_buy, int amount, bool diff_city) {
+long long int Buyer::buyProduct(Product* to_buy, int amount, User* seller, bool diff_city) {
     // TODO handle different city being actually the same city
     Purchase new_purchase;
 
@@ -41,6 +41,8 @@ long long int Buyer::buyProduct(Product* to_buy, int amount, bool diff_city) {
     new_purchase.time_purchased = std::ctime(&end_time);
 
     purchase_list_.push_back(new_purchase);
+    seller->addTransaction(to_buy, amount, decideDeliveryPrice(diff_city),
+                            final_price, new_purchase.time_purchased, user);
 
     return final_price;
 }
