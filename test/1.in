@@ -1,6 +1,11 @@
 POST signup ? username karim password 123123 role seller address Karaj
 POST add_item ? name shokolat price 100 category chocolates quantity 10 refund 50
 POST add_item ? name milk price 120 category dairy quantity 60
+PUT item_quantity ? id 1 quantity 70
+PUT item_quantity ? id 3 quantity 70
+POST logout
+POST signup ? username Sara password 123123 role seller address America
+PUT item_quantity ? id 2 quantity 70
 POST logout
 POST signup ? username ali password 123123 role buyer address Karaj
 POST login ? username ali password 123123
@@ -11,3 +16,5 @@ POST buy_item ? id 3 count 5 city Karaj
 POST refund ? purchase_id 0
 GET wallet_balance
 GET list_purchased
+POST login ? username karim password 123123
+GET list_transactions

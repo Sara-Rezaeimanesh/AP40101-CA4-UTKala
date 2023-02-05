@@ -100,14 +100,24 @@ void CommandHandler::splitCommand(const std::string& command) {
         curr_command.split_line.push_back(temp);
 }
 
+bool CommandHandler::isOKCommand(ss cname) {
+    for(ss name : OKCommand)
+        if(name == cname)
+            return true;
+    return false;
+}
+
 void CommandHandler::executeCommand(ss command) {
     const int NAME_IDX = 1;
+
+    cout << "this is comamnd: " << command << endl;
 
     parseCommand(command);
     for (auto& cmd : commands_list) {
         if (cmd.isEqual(curr_command.split_line[NAME_IDX], curr_command.cmd_type)) {
             cmd.execute(curr_command.args);
-            std::cout << "OK\n";
+            if(isOKCommand(curr_command.split_line[NAME_IDX]))
+                std::cout << "OK\n";
             return;
         }
     }

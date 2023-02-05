@@ -211,6 +211,11 @@ void UTKala::printRevenue(ArgsMap args) {
 
 void UTKala::deleteItem(ArgsMap args) {
     const std::string ID = "id";
+    for(auto p : products) {
+        if(p->getId() == stoi(args[ID]) && 
+        !currUser->userNameMatches(p->getSellerUsername()))
+            throw PermissionDeniedEx();
+    }
     currUser->deleteItem(std::stoi(args[ID]));
 }
 

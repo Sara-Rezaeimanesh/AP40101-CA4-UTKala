@@ -103,9 +103,12 @@ void Seller::deleteItem(int id) {
 void Seller::listTransactions() {
     if(transactions.size() == 0)
         throw EmptyEx();
-        
-    for(auto t : transactions)
-        std::cout << t->to_string() << std::endl;
+
+    for(size_t i = 0; i < transactions.size(); i++) {
+        std::cout << transactions[i]->to_string();
+        if(i != transactions.size() - 1)
+            std::cout << std::endl;
+    }
 }
 
 void Seller::addTransaction(Product* to_buy, int amount, long long int deliveryCost,
@@ -117,8 +120,9 @@ void Seller::addTransaction(Product* to_buy, int amount, long long int deliveryC
 }
 
 ss Transaction::to_string() {
-    return "id: " + std::to_string(id) + "\n" + "date: " + date + "\n" +
-            "item_id: " + std::to_string(product->getId()) + "\n" + "item_name" + product->getName()+
-            "\n" + "item_price: " + std::to_string(product->getPrice()) + "\n" + "purchased_count" 
-            + std::to_string(count) + "\n" + "delivery_cost: " + std::to_string(delivery) + "\n";
+    return "id: " + std::to_string(id) + "\n" + "date: " + date + "buyer: " + buyer_name + "\n" +
+            "item_id: " + std::to_string(product->getId()) + "\n" + "item_name: " + product->getName()+
+            "\n" + "item_price: " + std::to_string(product->getPrice()) + "\n" + "purchased_count: " 
+            + std::to_string(count) + "\n" + "delivery_cost: " + std::to_string(delivery) + "\n" + "total_cost: " +
+            std::to_string(total_cost) + "\n";
 }

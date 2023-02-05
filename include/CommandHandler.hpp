@@ -93,10 +93,16 @@ private:
         ArgsMap args;
     } curr_command;
 
+    std::vector<ss> OKCommand = {
+        "signup", "login", "logout", "increase_credit", 
+        "refund", "item", "item_price", "item_quantity"
+    };
+
     void executeCommand(ss command);
     void parseCommand(std::string command);
     void splitCommand(const std::string& command);
     void findArgs(std::vector<std::string> argNames);
+    bool isOKCommand(ss cname);
 };
 
 #endif
