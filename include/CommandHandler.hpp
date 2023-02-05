@@ -34,7 +34,8 @@ public:
             Command("list_items", Command::CmdType::GET, {}, {"sort_by"}, utk, &UTKala::showSubmittedProducts),
             Command("revenue", Command::CmdType::GET, {}, {}, utk, &UTKala::printRevenue),
             Command("item", Command::CmdType::DELETE, {"id"}, {}, utk, &UTKala::deleteItem),
-            Command("list_transactions", Command::CmdType::GET, {}, {}, utk, &UTKala::listTransactions)
+            Command("list_transactions", Command::CmdType::GET, {}, {}, utk, &UTKala::listTransactions),
+            Command("item_quantity", Command::CmdType::PUT, {"id","quantity"}, {}, utk, &UTKala::itemQuantity)
         };
     };
     ~CommandHandler();

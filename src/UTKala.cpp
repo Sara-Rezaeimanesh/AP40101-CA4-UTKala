@@ -217,3 +217,24 @@ void UTKala::deleteItem(ArgsMap args) {
 void UTKala::listTransactions(ArgsMap args) {
     currUser->listTransactions();
 }
+
+void UTKala::itemQuantity(ArgsMap args) {
+    const std::string ID = "id";
+    const std::string QUANTITY = "quantity";
+
+    if(stoi(args[QUANTITY])<0)
+        throw BadRequestEx();
+
+    for(auto p : products) {
+        if(p->getId() == stoi(args[ID]) && 
+        currUser->userNameMatches(p->getSellerUsername()))  {
+            p->changeQuantity(stoi(args[QUANTITY]));
+            return;
+        }
+        
+        else if(!currUser->userNameMatches(p->getSellerUsername()))
+            throw PermissionDeniedEx();
+    }
+    throw NotFoundEx();
+
+}

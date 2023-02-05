@@ -119,3 +119,4 @@ void CommandHandler::findArgs(vector<ss> argNames) {
     for (std::size_t i = 0; i < argNames.size(); i += 2)
         curr_command.args[argNames[i]] = argNames[i + 1];
 }
+

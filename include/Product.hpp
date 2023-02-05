@@ -31,6 +31,7 @@ public:
     void changePrice(int new_price);
     std::string toString() const;
     std::string  stringInfoForPurchase() const;
+    void changeQuantity(int quantity);
 
 private:
     User* owner_;

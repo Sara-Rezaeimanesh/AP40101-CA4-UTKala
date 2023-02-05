@@ -101,6 +101,9 @@ void Seller::deleteItem(int id) {
 }
 
 void Seller::listTransactions() {
+    if(transactions.size() == 0)
+        throw EmptyEx();
+        
     for(auto t : transactions)
         std::cout << t->to_string() << std::endl;
 }

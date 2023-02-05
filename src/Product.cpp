@@ -90,3 +90,7 @@ std::string  Product::stringInfoForPurchase() const {
                 + "item_price : " + std::to_string(price_);
 
 }
+
+void Product::changeQuantity(int quantity) {
+    quantity_ = quantity;
+}
