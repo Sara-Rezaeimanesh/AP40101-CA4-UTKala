@@ -248,12 +248,14 @@ void UTKala::deleteItem(ArgsMap args) {
         throw BadRequestEx();
 
     const std::string ID = "id";
-    for (auto p : products) {
-        if (p->getId() == stoi(args[ID]) &&
-            !currUser->userNameMatches(p->getSellerUsername()))
-            throw PermissionDeniedEx();
-    }
+    Product* found_prod = findProduct(std::stoi(args[ID]));
+    if (found_prod == nullptr)
+        throw NotFoundEx();
+    if (!currUser->userNameMatches(found_prod->getOwner()->getUserName()))
+        throw PermissionDeniedEx();
+    products.erase(std::find(products.begin(), products.end(), found_prod));
     currUser->deleteItem(std::stoi(args[ID]));
+    delete found_prod;
 }
 
 void UTKala::listTransactions(ArgsMap args) {

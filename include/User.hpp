@@ -14,6 +14,7 @@ public:
     User(ss user, ss pass, ss city) : user(user),
                                       pass(pass),
                                       city(city) {};
+    std::string getUserName() const { return user; }
     int userNameMatches(ss user_);
     ss toString() { return user + " " + pass + " " + city; }
     bool isDefault() { return user == "default"; }
@@ -33,8 +34,7 @@ public:
     virtual void printRevenue() const = 0;
     virtual void deleteItem(int id) { throw BadRequestEx(); }
     virtual void listTransactions() { throw BadRequestEx(); }
-    virtual void addTransaction(Product* to_buy, int amount, long long int deliveryCost,
-                            long long int final_price, ss time_purchased, ss user) { throw BadRequestEx(); };
+    virtual void addTransaction(Product* to_buy, int amount, long long int deliveryCost, long long int final_price, ss time_purchased, ss user) { throw BadRequestEx(); };
 
 protected:
     ss user;
