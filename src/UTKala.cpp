@@ -32,7 +32,7 @@ void UTKala::signup(ArgsMap args) {
     const std::string USER_ARG = "username";
     const std::string PASS_ARG = "password";
     const std::string ROLE_ARG = "role";
-    const std::string ADDR_ARG = "address";
+    const std::string ADDR_ARG = "city";
 
     checkUserExistsViolation(args[USER_ARG], args[PASS_ARG]);
     checkUserRoleIsValid(args[ROLE_ARG]);
@@ -65,10 +65,15 @@ User* UTKala::findUser(ss user) {
 }
 
 void UTKala::logout(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
     currUser = NULL;
 }
 
 void UTKala::increaseCredit(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     const std::string AMOUNT_ARG = "amount";
 
     if (stoi(args[AMOUNT_ARG]) <= 0) throw BadRequestEx();
@@ -76,10 +81,16 @@ void UTKala::increaseCredit(ArgsMap args) {
 }
 
 void UTKala::showWalletBallance(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     currUser->showCredit();
 }
 
 void UTKala::showProducts(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     const std::string SELLER_ARG = "seller_username";
     const std::string SORT_ARG = "sort_by";
 
@@ -127,6 +138,9 @@ void UTKala::showProducts(ArgsMap args) {
 }
 
 void UTKala::buyItem(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     const std::string ID_ARG = "id";
     const std::string COUNT_ARG = "count";
     const std::string CITY_ARG = "city";
@@ -144,12 +158,18 @@ void UTKala::buyItem(ArgsMap args) {
 }
 
 void UTKala::refund(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     const std::string P_ID = "purchased_id";
 
     currUser->refund(std::stoi(args[P_ID]));
 }
 
 void UTKala::addProduct(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     const std::string NAME_ARG = "name";
     const std::string PRICE_ARG = "price";
     const std::string CAT_ARG = "category";
@@ -179,10 +199,16 @@ void UTKala::addProduct(ArgsMap args) {
 }
 
 void UTKala::printListPurchased(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     currUser->printPurchased();
 }
 
 void UTKala::changeProductPrice(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     const std::string PRICE_ARG = "price";
     const std::string ID_ARG = "id";
 
@@ -197,6 +223,9 @@ void UTKala::changeProductPrice(ArgsMap args) {
 }
 
 void UTKala::showSubmittedProducts(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     const std::string SORT_ARG = "sort_by";
 
     bool sort = args.find(SORT_ARG) != args.end();
@@ -208,10 +237,16 @@ void UTKala::showSubmittedProducts(ArgsMap args) {
 }
 
 void UTKala::printRevenue(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     currUser->printRevenue();
 }
 
 void UTKala::deleteItem(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     const std::string ID = "id";
     for (auto p : products) {
         if (p->getId() == stoi(args[ID]) &&
@@ -222,10 +257,16 @@ void UTKala::deleteItem(ArgsMap args) {
 }
 
 void UTKala::listTransactions(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     currUser->listTransactions();
 }
 
 void UTKala::itemQuantity(ArgsMap args) {
+    if (currUser == nullptr)
+        throw BadRequestEx();
+
     const std::string ID = "id";
     const std::string QUANTITY = "quantity";
 

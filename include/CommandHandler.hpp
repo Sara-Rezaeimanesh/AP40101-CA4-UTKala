@@ -20,7 +20,7 @@ public:
     CommandHandler() : utk(new UTKala()),
                        oph(new OutputHandler()) {
         commands_list = {
-            Command("signup", Command::CmdType::POST, {"username", "password", "role", "address"}, {}, utk, &UTKala::signup),
+            Command("signup", Command::CmdType::POST, {"username", "password", "role", "city"}, {}, utk, &UTKala::signup),
             Command("login", Command::CmdType::POST, {"username", "password"}, {}, utk, &UTKala::login),
             Command("logout", Command::CmdType::POST, {}, {}, utk, &UTKala::logout),
             Command("increase_credit", Command::CmdType::POST, {"amount"}, {}, utk, &UTKala::increaseCredit),
