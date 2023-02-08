@@ -41,24 +41,18 @@ long long int Buyer::buyProduct(Product* to_buy, int amount, User* seller, bool 
     new_purchase.time_purchased = std::ctime(&end_time);
 
     purchase_list_.push_back(new_purchase);
-    seller->addTransaction(to_buy, amount, decideDeliveryPrice(diff_city),
-                            final_price, new_purchase.time_purchased, user);
+    seller->addTransaction(to_buy, amount, decideDeliveryPrice(diff_city), final_price, new_purchase.time_purchased, user);
 
     return final_price;
 }
 
 void Buyer::refund(int purchase_id) {
-    try {
-        auto& found_purchase = find_purchase(purchase_id);
-        found_purchase.bought_product->refund(found_purchase.amount);
-        int refund_amount = found_purchase.bought_product->getRefund(found_purchase.total_cost);
-        changeCredit(refund_amount);
-        found_purchase.is_refunded = true;
-        found_purchase.bought_product->getOwner()->changeCredit(refund_amount * -1);
-    }
-    catch (const std::exception& e) {
-        throw e;
-    }
+    auto& found_purchase = find_purchase(purchase_id);
+    found_purchase.bought_product->refund(found_purchase.amount);
+    int refund_amount = found_purchase.bought_product->getRefund(found_purchase.total_cost);
+    changeCredit(refund_amount);
+    found_purchase.is_refunded = true;
+    found_purchase.bought_product->getOwner()->changeCredit(refund_amount * -1);
 }
 
 Product* Buyer::addProduct(
@@ -84,8 +78,7 @@ void Buyer::printPurchased() {
                   << p.bought_product->stringInfoForPurchase() << std::endl
                   << "purchased_count : " << p.amount << std::endl
                   << "delivery_cost : " << p.delivery_cost << std::endl
-                  << "total_cost : " << p.total_cost << std::endl
-                  << std::endl;
+                  << "total_cost : " << p.total_cost << std::endl;
 }
 
 void Buyer::changeProductPrice(Product* product, long long new_price) {

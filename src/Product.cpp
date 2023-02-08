@@ -60,7 +60,7 @@ long long int Product::buy(int amount) {
 }
 
 void Product::refund(int amount) {
-    if (refund_percentage_ == -1)
+    if (refund_percentage_ == -1 || refund_percentage_ == 0)
         throw BadRequestEx();
 
     quantity_ += amount;
