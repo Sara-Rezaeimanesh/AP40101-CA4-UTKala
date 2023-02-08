@@ -110,8 +110,6 @@ bool CommandHandler::isOKCommand(ss cname) {
 void CommandHandler::executeCommand(ss command) {
     const int NAME_IDX = 1;
 
-    cout << "this is comamnd: " << command << endl;
-
     parseCommand(command);
     for (auto& cmd : commands_list) {
         if (cmd.isEqual(curr_command.split_line[NAME_IDX], curr_command.cmd_type)) {

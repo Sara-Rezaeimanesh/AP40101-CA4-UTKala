@@ -135,6 +135,8 @@ void UTKala::buyItem(ArgsMap args) {
 
     Product* to_buy = nullptr;
     to_buy = findProduct(std::stoi(args[ID_ARG]));
+    if (to_buy == nullptr)
+        throw NotFoundEx();
     User* seller = findUser(to_buy->getSellerUsername());
     long long final_price = currUser->buyProduct(to_buy, std::stoi(args[COUNT_ARG]), seller, diff_city);
     to_buy->getOwner()->changeCredit(final_price);
@@ -211,9 +213,9 @@ void UTKala::printRevenue(ArgsMap args) {
 
 void UTKala::deleteItem(ArgsMap args) {
     const std::string ID = "id";
-    for(auto p : products) {
-        if(p->getId() == stoi(args[ID]) && 
-        !currUser->userNameMatches(p->getSellerUsername()))
+    for (auto p : products) {
+        if (p->getId() == stoi(args[ID]) &&
+            !currUser->userNameMatches(p->getSellerUsername()))
             throw PermissionDeniedEx();
     }
     currUser->deleteItem(std::stoi(args[ID]));
@@ -227,19 +229,18 @@ void UTKala::itemQuantity(ArgsMap args) {
     const std::string ID = "id";
     const std::string QUANTITY = "quantity";
 
-    if(stoi(args[QUANTITY])<0)
+    if (stoi(args[QUANTITY]) < 0)
         throw BadRequestEx();
 
-    for(auto p : products) {
-        if(p->getId() == stoi(args[ID]) && 
-        currUser->userNameMatches(p->getSellerUsername()))  {
+    for (auto p : products) {
+        if (p->getId() == stoi(args[ID]) &&
+            currUser->userNameMatches(p->getSellerUsername())) {
             p->changeQuantity(stoi(args[QUANTITY]));
             return;
         }
-        
-        else if(!currUser->userNameMatches(p->getSellerUsername()))
+
+        else if (!currUser->userNameMatches(p->getSellerUsername()))
             throw PermissionDeniedEx();
     }
     throw NotFoundEx();
-
 }
